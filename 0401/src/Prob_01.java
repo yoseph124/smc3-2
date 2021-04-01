@@ -18,4 +18,4 @@ class Grade{
 	public int average(){
 		return (math+science+english)/3;
 	}
-}
+}//§ª§ª ∞≥±º¿Î
