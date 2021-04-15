@@ -1,17 +1,17 @@
 import java.util.Random;
-import java.util.Scanner;
+import java.util.Scanner;//ìŠ¤ì¼€ë„ˆì™€ ë Œë¤ ìƒì„±
 public class Number {
 	public static void main(String[] args) {
-		Random ra = new Random();
-		Scanner scnn = new Scanner(System.in);
-		System.out.print("10°³ÀÇ ·£´ı ¼ıÀÚ Áß ÇÏ³ª¸¦ ¸ÂÃçº¸¼¼¿ä(1~50±îÁö):");
-		int number = scnn.nextInt(), i, a, b=0;
-		for(i=0;i<=9;i++) {
-			a = ra.nextInt(50)+1;
-			System.out.print(a+" ");
-			if(number==a) b=1;
+		Random ra = new Random();//ëœë¤ë¬¸ ìƒì„±
+		Scanner scnn = new Scanner(System.in);//ìŠ¤ì¼€ë„ˆ ìƒì„±
+		System.out.print("10ê°œì˜ ëœë¤ ìˆ«ì ì¤‘ í•˜ë‚˜ë¥¼ ë§ì¶°ë³´ì„¸ìš”(1~50ê¹Œì§€):");
+		int number = scnn.nextInt(), i, a, b=0;//ìŠ¤ì¼„ë°›ê¸°& ì •ìˆ˜í˜• ìƒì„±
+		for(i=0;i<=9;i++) {//ë°˜ë³µë¬¸ ìƒì„±
+			a = ra.nextInt(50)+1;//ëœë¤ìˆ«ì ë°›ê¸°
+			System.out.print(a+" ");//ëœë¤ìˆ«ì ì¶œë ¥
+			if(number==a) b=1;//ëœë¤ìˆ«ì ì¼ì¹˜í™•ì¸
 		}
-		if(b==1) System.out.println("\n´çÃ·! ÀÏÄ¡ÇÏ´Â ¼ıÀÚ°¡ ÀÖ½À´Ï´Ù.");
-		else System.out.println("\n¾Æ½±±º¿ä! ÀÏÄ¡ÇÏ´Â ¼ıÀÚ°¡ ¾ø½À´Ï´Ù.");
+		if(b==1) System.out.println("\në‹¹ì²¨! ì¼ì¹˜í•˜ëŠ” ìˆ«ìê°€ ìˆìŠµë‹ˆë‹¤.");//ì¼ì¹˜í™•ì¸
+		else System.out.println("\nì•„ì‰½êµ°ìš”! ì¼ì¹˜í•˜ëŠ” ìˆ«ìê°€ ì—†ìŠµë‹ˆë‹¤.");//ì¼ì¹˜í™•ì¸
 	}
 }
