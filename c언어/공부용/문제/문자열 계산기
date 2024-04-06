@@ -12,7 +12,24 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+char asdr(char buffer8,int buffer4,int buffer0){
+     if(buffer8=='+'){
+        printf("%d %c %d = %d", *(int*)&buffer0,buffer8,*(int*)&buffer4,*(int*)&buffer0+*(int*)&buffer4);
+       
+    }
+    else if(buffer8=='-'){
+        printf("%d %c %d = %d", *(int*)&buffer0,buffer8,*(int*)&buffer4,*(int*)&buffer0-*(int*)&buffer4);
+   
+    }
+    else if(buffer8=='*'){
+        printf("%d %c %d = %d", *(int*)&buffer0,buffer8,*(int*)&buffer4,*(int*)&buffer0 * *(int*)&buffer4);
 
+    }
+    else if(buffer8=='/'){
+        printf("%d %c %d = %d", *(int*)&buffer0,buffer8,*(int*)&buffer4,*(int*)&buffer0 / *(int*)&buffer4);
+
+    }
+}
 int main() {
     char buffer[9];
     printf("수 1 입력 : ");
@@ -24,21 +41,6 @@ int main() {
     printf("연산자 입력 : ");
     scanf("%s", &buffer[8]);
     printf("\n");
-    if(buffer[8]=='+'){
-        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]+*(int*)&buffer[4]);
-       
-    }
-    else if(buffer[8]=='-'){
-        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]-*(int*)&buffer[4]);
-   
-    }
-    else if(buffer[8]=='*'){
-        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]**(int*)&buffer[4]);
-
-    }
-    else if(buffer[8]=='/'){
-        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0] / *(int*)&buffer[4]);
-
-    }
+   asdr(buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]);
 
 }
