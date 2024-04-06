@@ -1,0 +1,258 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    char buffer[9];
+    printf("수 1 입력 : ");
+    scanf("%s", &buffer[0]);
+    printf("\n");
+    if(atoi(&buffer[0])>255){
+        if(atoi(&buffer[0])>65535){
+            buffer[7]=(atoi(&buffer[0])/65536)-127;
+            buffer[8]=(atoi(&buffer[0])%65536)-127;
+            buffer[6]=0;
+        }
+        else{
+            buffer[7]=(atoi(&buffer[0])/256)-127;
+            buffer[8]=(atoi(&buffer[0])%256)-127;
+            buffer[6]=1;
+        }
+    }
+    else{
+        buffer[7]=atoi(&buffer[0])-127;
+        buffer[6]=2;
+    }
+    printf("수 2 입력 : ");
+    scanf("%s", &buffer[0]);
+    printf("\n");
+    if(atoi(&buffer[0])>255){
+        if(atoi(&buffer[0])>65535){
+            buffer[5]=(atoi(&buffer[0])/65536)-127;
+            buffer[4]=(atoi(&buffer[0])%65536)-127;
+            buffer[3]=0;
+        }
+        else{
+            buffer[5]=(atoi(&buffer[0])/256)-127;
+            buffer[4]=(atoi(&buffer[0])%256)-127;
+            buffer[3]=1;
+        }
+    }
+    else{
+        buffer[5]=atoi(&buffer[0])-127;
+        buffer[3]=2;
+    }
+    printf("연산자 입력 : ");
+    scanf("%s", &buffer[0]);
+    printf("\n");
+
+    if(buffer[0]=='+'){
+        if(buffer[6]==0){
+            printf("%d ",((buffer[7]+127)*65536)+(buffer[8]+127));
+            
+        }
+        else if(buffer[6]==1){
+            printf("%d ",((buffer[7]+127)*256)+(buffer[8]+127));
+        }
+        else{
+            printf("%d ",(buffer[7]+127));
+        }
+        printf("%s ",&buffer[0]);
+        if(buffer[3]==0){
+            printf("%d ",((buffer[5]+127)*65536)+(buffer[4]+127));
+        }
+        else if(buffer[3]==1){
+            printf("%d ",(buffer[5]+127)*256+(buffer[4]+127));
+        }
+        else{
+            printf("%d ",(buffer[5]+127));
+        }
+        printf("=");
+        if(buffer[6]==0 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))+(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))+(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))+(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))+(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==2 && buffer[3]==0){
+            printf("%d",(buffer[7]+12)+(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))+(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==1){
+            printf("%d",(buffer[7]+127)+(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))+(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==2){
+            printf("%d",(buffer[7]+127)+(buffer[5]+127));
+        }
+        
+        
+            
+    }
+    if(buffer[0]=='-'){
+        if(buffer[6]==0){
+            printf("%d ",((buffer[7]+127)*65536)+(buffer[8]+127));
+            
+        }
+        else if(buffer[6]==1){
+            printf("%d ",((buffer[7]+127)*256)+(buffer[8]+127));
+        }
+        else{
+            printf("%d ",(buffer[7]+127));
+        }
+        printf("%s ",&buffer[0]);
+        if(buffer[3]==0){
+            printf("%d ",((buffer[5]+127)*65536)+(buffer[4]+127));
+        }
+        else if(buffer[3]==1){
+            printf("%d ",(buffer[5]+127)*256+(buffer[4]+127));
+        }
+        else{
+            printf("%d ",(buffer[5]+127));
+        }
+        printf("=");
+        if(buffer[6]==0 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))-(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))-(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))-(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))-(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==2 && buffer[3]==0){
+            printf("%d",(buffer[7]+12)-(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))-(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==1){
+            printf("%d",(buffer[7]+127)-(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))-(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==2){
+            printf("%d",(buffer[7]+127)-(buffer[5]+127));
+        }
+        
+        
+            
+    }
+    if(buffer[0]=='/'){
+        if(buffer[6]==0){
+            printf("%d ",((buffer[7]+127)*65536)+(buffer[8]+127));
+            
+        }
+        else if(buffer[6]==1){
+            printf("%d ",((buffer[7]+127)*256)+(buffer[8]+127));
+        }
+        else{
+            printf("%d ",(buffer[7]+127));
+        }
+        printf("%s ",&buffer[0]);
+        if(buffer[3]==0){
+            printf("%d ",((buffer[5]+127)*65536)+(buffer[4]+127));
+        }
+        else if(buffer[3]==1){
+            printf("%d ",(buffer[5]+127)*256+(buffer[4]+127));
+        }
+        else{
+            printf("%d ",(buffer[5]+127));
+        }
+        printf("=");
+        if(buffer[6]==0 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))/(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))/(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))/(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))/(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==2 && buffer[3]==0){
+            printf("%d",(buffer[7]+12)/(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))/(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==1){
+            printf("%d",(buffer[7]+127)/(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))/(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==2){
+            printf("%d",(buffer[7]+127)/(buffer[5]+127));
+        }
+        
+        
+            
+    }
+    if(buffer[0]=='*'){
+        if(buffer[6]==0){
+            printf("%d ",((buffer[7]+127)*65536)+(buffer[8]+127));
+            
+        }
+        else if(buffer[6]==1){
+            printf("%d ",((buffer[7]+127)*256)+(buffer[8]+127));
+        }
+        else{
+            printf("%d ",(buffer[7]+127));
+        }
+        printf("%s ",&buffer[0]);
+        if(buffer[3]==0){
+            printf("%d ",((buffer[5]+127)*65536)+(buffer[4]+127));
+        }
+        else if(buffer[3]==1){
+            printf("%d ",(buffer[5]+127)*256+(buffer[4]+127));
+        }
+        else{
+            printf("%d ",(buffer[5]+127));
+        }
+        printf("=");
+        if(buffer[6]==0 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))*(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==0){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))*(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))*(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==1){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))*(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==2 && buffer[3]==0){
+            printf("%d",(buffer[7]+12)*(((buffer[5]+127)*65536)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==0 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*65536)+(buffer[8]+127))*(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==1){
+            printf("%d",(buffer[7]+127)*(((buffer[5]+127)*256)+(buffer[4]+127)));
+        }
+        else if(buffer[6]==1 && buffer[3]==2){
+            printf("%d",(((buffer[7]+127)*256)+(buffer[8]+127))*(buffer[5]+127));
+        }
+        else if(buffer[6]==2 && buffer[3]==2){
+            printf("%d",(buffer[7]+127)*(buffer[5]+127));
+        }
+    }
+}
