@@ -1,0 +1,44 @@
+// 임의의 두 정수를 입력 받아 두수의 합을 출력하는 프로그램을 작성하시오.
+//   - 단, 기억공간은 char buffer[9]만 사용하고 어떠한 변수도 만들수 없다.
+//     - 계산 부분은 함수를 써야 한다
+// 결과
+
+// 수 1 입력 : 100
+// 수 2 입력 : 200
+// 연산자입력 : -
+// 100 + 200 = -100.000000
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() {
+    char buffer[9];
+    printf("수 1 입력 : ");
+    scanf("%d",(int*)&buffer[0]);
+    printf("\n");
+    printf("수 2 입력 : ");
+    scanf("%d",(int*)&buffer[4]);
+    printf("\n");
+    printf("연산자 입력 : ");
+    scanf("%s", &buffer[8]);
+    printf("\n");
+    if(buffer[8]=='+'){
+        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]+*(int*)&buffer[4]);
+       
+    }
+    else if(buffer[8]=='-'){
+        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]-*(int*)&buffer[4]);
+   
+    }
+    else if(buffer[8]=='*'){
+        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0]**(int*)&buffer[4]);
+
+    }
+    else if(buffer[8]=='/'){
+        printf("%d %s %d = %d", *(int*)&buffer[0],&buffer[8],*(int*)&buffer[4],*(int*)&buffer[0] / *(int*)&buffer[4]);
+
+    }
+
+}
