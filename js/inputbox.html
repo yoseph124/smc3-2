@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 5px;
+            padding: 0;
+        }
+        th, td {
+            border: 1px solid #000;
+            vertical-align: middle;
+            text-align: center;
+        }
+        tbody>tr {
+            counter-increment: aaa;
+        }
+        tbody>tr>td:first-child:before {
+            content: counter(aaa) " ";
+        }
+        td:nth-child(3) {
+            text-align: left;
+        }
+        .button {
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .delete-button, .comment-button {
+            background-color: #bce6f7;
+        }
+    </style>
+</head>
+<body>
+    <input id="name" type="text" style="width: 100px; height: 30px; margin-right: 0px;" OnKeyDown="CheckEnter1('det')">
+    <input id="det" type="text" style="width: 500px; height: 30px; margin: 10px 5px 15px 5px;" OnKeyDown="CheckEnter2('updeat')">
+    <input type="submit" value="글작성" onClick="updeat()" class="button">
+    
+
+    <table style="border-collapse: collapse;">
+        <tr>
+            <th scope="col" style="width: 50px; height: 25px;">번호</th>
+            <th scope="col" style="width: 150px; height: 25px;">작성자</th>
+            <th scope="col" style="width: 1000px; height: 25px;">내용</th>
+            <th scope="col" style="width: 200px; height: 25px;">작성일</th>
+            <th scope="col" style="width: 200px; height: 25px;">기능</th>
+        </tr>
+        <tbody id="nobo"></tbody>
+    </table>
+
+    <script>
+        var aname = document.getElementById('name');
+        var det = document.getElementById('det');
+        let today = new Date();
+
+        function CheckEnter1(d) {
+            var keycode = event.keyCode;
+            if (keycode == 13) {
+                document.getElementById(d).focus();
+            }
+        }
+
+        function CheckEnter2(u) {
+            var keycode = event.keyCode;
+            if (keycode == 13) {
+                updeat();
+            }
+        }
+
+        function updeat() {
+            const table = document.getElementById('nobo');
+            const newRow = table.insertRow();
+            const newCell1 = newRow.insertCell(0);
+            const newCell2 = newRow.insertCell(1);
+            const newCell3 = newRow.insertCell(2);
+            const newCell4 = newRow.insertCell(3);
+            const newCell5 = newRow.insertCell(4);
+            newCell1.innerText = '';
+            newCell2.innerText = aname.value;
+            newCell3.innerText = det.value;
+            let today = new Date();
+            newCell4.innerText = today.toLocaleString();
+            newCell5.innerHTML = '<button onClick="remove_tr(this)" class="button delete-button">삭제</button><button onClick="comment(this)" class="button comment-button">댓글</button>';
+        }
+
+        function remove_tr(This) {
+            const re = confirm("정말 삭제하시겠습니까?");
+            if (re == true) {
+                This.closest('tr').remove();
+            } else {
+                alert("취소하였습니다.");
+            }
+        }
+
+        function comment(This) {
+            const comme = prompt("댓글을 입력하세요");
+            const tr = This.closest("tr");
+            const commentCell = tr.cells[2];
+            let commentDate = new Date();
+            commentCell.innerText += "\nㄴ" + comme + " (" + commentDate.toLocaleString() + ")";
+        }
+    </script>
+</body>
+</html>
