@@ -43,9 +43,11 @@
     <input id="name" type="text" style="width: 100px; height: 30px; margin-right: 0px;" OnKeyDown="CheckEnter1('det')">
     <input id="det" type="text" style="width: 500px; height: 30px; margin: 10px 5px 15px 5px;" OnKeyDown="CheckEnter2('updeat')">
     <input type="submit" value="글작성" onClick="updeat()" class="button">
-    
-
-    <table style="border-collapse: collapse;">
+    <table style="border-collapse: collapse;" id="ttable">
+        <input type="submit" onclick="downloadText()" value="저장하기" class="button comment-button">
+        <button for="fileBtn" class="button comment-button" id="open_file">불러오기</button>
+        <input type="file" id="fileBtn" style="display:none" accept=".json" title='Select JSON File' />
+        <button onclick="alldil(this)" style="width: 150px; height:40px;" class="button comment-button">게시판 지우기</button>
         <tr>
             <th scope="col" style="width: 50px; height: 25px;">번호</th>
             <th scope="col" style="width: 150px; height: 25px;">작성자</th>
@@ -105,8 +107,92 @@
             const tr = This.closest("tr");
             const commentCell = tr.cells[2];
             let commentDate = new Date();
-            commentCell.innerText += "\nㄴ" + comme + " (" + commentDate.toLocaleString() + ")";
+            if(comme==null||comme==''){
+
+            }
+            else{
+                commentCell.innerText += "\nㄴ" + comme + " (" + commentDate.toLocaleString() + ")";
+            }
         }
+
+        function downloadText(filename) {
+            const tableRows = document.getElementById('nobo').getElementsByTagName('tr');
+            if (tableRows.length == 0) {
+                alert('저장할 데이터가 없습니다.');
+                return;
+            }
+            
+            const data = [];
+            for (let i = 0; i < tableRows.length; i++) {
+                const row = tableRows[i];
+                const rowData = {
+                    번호: row.cells[0].innerText.trim(),
+                    작성자: row.cells[1].innerText.trim(),
+                    내용: row.cells[2].innerText.trim(),
+                    작성일: row.cells[3].innerText.trim()
+                };
+                data.push(rowData);
+            }
+        
+            const jsonString = JSON.stringify(data, null, 4);
+        
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonString));
+            element.setAttribute('download', filename || 'data.json');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+        }
+        
+        
+
+
+            const label = document.getElementById('open_file');
+            const fileInput = document.getElementById('fileBtn');
+            label.addEventListener('click', function (e) {
+            e.preventDefault();
+            fileInput.click();
+            });
+
+            fileInput.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            const fr = new FileReader();
+            fr.onload = () => {
+            var fileContent = fr.result;
+            var jsonObj = JSON.parse(fileContent);
+            refreshTable(jsonObj);
+            }
+            fr.readAsText(file);
+            });
+
+            function refreshTable(data) {
+                const tableBody = document.getElementById('nobo');
+                tableBody.innerHTML = ''; 
+            
+                data.forEach(item => {
+                    const newRow = tableBody.insertRow();
+                    const newCell1 = newRow.insertCell(0);
+                    const newCell2 = newRow.insertCell(1);
+                    const newCell3 = newRow.insertCell(2);
+                    const newCell4 = newRow.insertCell(3);
+                    const newCell5 = newRow.insertCell(4);
+            
+                    newCell1.innerText = item.번호;
+                    newCell2.innerText = item.작성자;
+                    newCell3.innerText = item.내용;
+                    newCell4.innerText = item.작성일;
+                    newCell5.innerHTML = '<button onClick="remove_tr(this)" class="button delete-button">삭제</button><button onClick="comment(this)" class="button comment-button">댓글</button>';
+                });
+            }
+
+
+            function alldil(This) {
+                const tbody = document.getElementById('nobo');
+                while (tbody.firstChild) {
+                    tbody.removeChild(tbody.firstChild);
+                }
+            }
     </script>
 </body>
 </html>
