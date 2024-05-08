@@ -111,7 +111,8 @@
 
             }
             else{
-                commentCell.innerText += "\nㄴ" + comme + " (" + commentDate.toLocaleString() + ")";
+                const commentHTML = `<p id="comment">ㄴ${comme} (${commentDate.toLocaleString()})</p>`;
+                commentCell.innerHTML += commentHTML;
             }
         }
 
@@ -125,17 +126,24 @@
             const data = [];
             for (let i = 0; i < tableRows.length; i++) {
                 const row = tableRows[i];
+                const contentCell = row.cells[2];
+                const commentCell = row.cells[4];
+                
+                // 내용에서 <s> 태그 제거
+                const content = contentCell.innerText.trim();
+                const comment = document.getElementById('comment');
+
                 const rowData = {
-                    번호: row.cells[0].innerText.trim(),
-                    작성자: row.cells[1].innerText.trim(),
-                    내용: row.cells[2].innerText.trim(),
-                    작성일: row.cells[3].innerText.trim()
+                    id: row.cells[1].innerText.trim(), // 작성자
+                    content: content, // 내용
+                    date: row.cells[3].innerText.trim(), // 날짜와 시간
+                    comment: comment // 댓글
                 };
                 data.push(rowData);
             }
-        
+            
             const jsonString = JSON.stringify(data, null, 4);
-        
+            
             const element = document.createElement('a');
             element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonString));
             element.setAttribute('download', filename || 'data.json');
@@ -144,6 +152,7 @@
             element.click();
             document.body.removeChild(element);
         }
+        
         
         
 
@@ -156,19 +165,19 @@
             });
 
             fileInput.addEventListener('change', function (e) {
-            const file = e.target.files[0];
-            const fr = new FileReader();
-            fr.onload = () => {
-            var fileContent = fr.result;
-            var jsonObj = JSON.parse(fileContent);
-            refreshTable(jsonObj);
-            }
-            fr.readAsText(file);
+                const file = e.target.files[0];
+                const fr = new FileReader();
+                fr.onload = () => {
+                    var fileContent = fr.result;
+                    var jsonData = JSON.parse(fileContent);
+                    refreshTable(jsonData); // 데이터를 화면에 표시하는 함수 호출
+                }
+                fr.readAsText(file);
             });
-
+            
             function refreshTable(data) {
                 const tableBody = document.getElementById('nobo');
-                tableBody.innerHTML = ''; 
+                tableBody.innerHTML = ''; // 테이블 내용 초기화
             
                 data.forEach(item => {
                     const newRow = tableBody.insertRow();
@@ -177,14 +186,19 @@
                     const newCell3 = newRow.insertCell(2);
                     const newCell4 = newRow.insertCell(3);
                     const newCell5 = newRow.insertCell(4);
-            
-                    newCell1.innerText = item.번호;
-                    newCell2.innerText = item.작성자;
-                    newCell3.innerText = item.내용;
-                    newCell4.innerText = item.작성일;
+
+                    newCell1.innerText='';
+                    newCell2.innerText = item.id;
+                    newCell3.innerText = item.content;
+                    //newCell3.innerText += item.comment;
+                    newCell4.innerText = item.date;
                     newCell5.innerHTML = '<button onClick="remove_tr(this)" class="button delete-button">삭제</button><button onClick="comment(this)" class="button comment-button">댓글</button>';
+    
+                    
+                    
                 });
             }
+            
 
 
             function alldil(This) {
